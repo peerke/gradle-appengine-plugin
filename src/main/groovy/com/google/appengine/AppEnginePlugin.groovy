@@ -146,7 +146,7 @@ class AppEnginePlugin implements Plugin<Project> {
         configureRun(project, appEnginePluginExtension, explodedAppDirectory)
         configureStop(project, appEnginePluginExtension)
         configureUpdate(project, appEnginePluginExtension, explodedAppDirectory)
-        configureRollback(project)
+        configureRollback(project, explodedAppDirectory)
         configureSdk(project, appEnginePluginExtension)
         configureEnhance(project, appEnginePluginExtension)
         configureUpdateIndexes(project)
@@ -373,10 +373,15 @@ class AppEnginePlugin implements Plugin<Project> {
         appengineUpdateTask.dependsOn project.appengineExplodeApp
     }
 
-    private void configureRollback(Project project) {
+    private void configureRollback(Project project, File explodedWarDirectory) {
+        project.tasks.withType(RollbackTask).whenTaskAdded { RollbackTask appengineRollbackTask ->
+            appengineRollbackTask.conventionMapping.map(EXPLODED_WAR_DIR_CONVENTION_PARAM) { explodedWarDirectory }
+        }
+
         RollbackTask appengineRollbackTask = project.tasks.create(APPENGINE_ROLLBACK, RollbackTask)
         appengineRollbackTask.description = 'Undoes a partially completed update for the given application.'
         appengineRollbackTask.group = APPENGINE_GROUP
+        appengineRollbackTask.dependsOn project.appengineExplodeApp
     }
 
     private void configureSetDefaultVersionTask(Project project, File explodedAppDirectory) {

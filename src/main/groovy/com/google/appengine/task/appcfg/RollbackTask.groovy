@@ -15,6 +15,8 @@
  */
 package com.google.appengine.task.appcfg
 
+import org.gradle.api.tasks.InputDirectory
+
 /**
  * Google App Engine task undoing a partially completed update for the given application.
  *
@@ -22,6 +24,7 @@ package com.google.appengine.task.appcfg
  */
 class RollbackTask extends AppConfigTaskTemplate {
     static final String COMMAND = 'rollback'
+    @InputDirectory File explodedAppDirectory
 
     @Override
     String startLogMessage() {
@@ -40,6 +43,6 @@ class RollbackTask extends AppConfigTaskTemplate {
 
     @Override
     List getParams() {
-        [COMMAND, getWebAppSourceDirectory().canonicalPath]
+        [COMMAND, getExplodedAppDirectory().canonicalPath]
     }
 }
