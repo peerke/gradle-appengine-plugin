@@ -25,7 +25,7 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.google.appengine:gradle-appengine-plugin:1.9.48'
+    classpath 'com.google.appengine:gradle-appengine-plugin:1.9.50'
   }
 }
 ```
@@ -38,7 +38,7 @@ the configuration `appengineSdk`.
 
 ```gradle
 dependencies {
-  appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.48'
+  appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.50'
 }
 ```
 
@@ -135,8 +135,8 @@ Within `appengine` you can also define a closure named `endpoints`:
 * `getClientLibsOnBuild`: Automatically download client libraries before the `war` task is called. (defaults to false)
 * `installClientLibsOnBuild`: Automatically install client libs, will get client libs if necessary. (defaults to false) [this task will never be UP-TO-DATE, careful when making part of your build]
 * `exportClientLibsOnBuild`: Automatically export client libs, will get client libs if necessary. (defaults to false)
-* `clientLibsJarOut`: Output directory of client library jars when exporting. (Must be of type: File, will be created if doesn't exist)
-* `clientLibsSrcJarOut`: Output directory of client library source jars when exporting, if not specified no source jars will be copied. (Must be of type: File, will be created if doesn't exist)
+* `clientLibJarOut`: Output directory of client library jars when exporting. (Must be of type: File, will be created if doesn't exist)
+* `clientLibSrcJarOut`: Output directory of client library source jars when exporting, if not specified no source jars will be copied. (Must be of type: File, will be created if doesn't exist)
 * `googleClientVersion`: Override the version of the Google Api Client Library that builds with endpoints artifacts. (Only works with endpoints and android-endpoints configurations)
 
 The task `appengineDownloadApp` requires you to at least define the application ID and directory to write the files to. Define the tasks' properties in the
@@ -295,8 +295,6 @@ it may appear as "/tmp/enhance(some number).log"
 
 <br>
 **How do I deploy with gcloud?**
-
-**NOTE**: You can try the [gradle gcloud plugin](GCLOUD.md)
 
 If you're using gcloud to deploy your application, the newest version of `app deploy` doesn't support war directories, you will need to provide it with an `app.yaml` OR you can use the `appengineStage` task to create a directory that is deployable in `<project>/build/staged-app`
 
